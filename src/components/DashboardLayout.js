@@ -39,7 +39,7 @@ export default function DashboardLayout({ children }) {
           {/* Top bar for mobile */}
           <div className="lg:hidden bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3">
             <div className="flex items-center justify-between">
-              <div className="flex items-center">
+              <div className="flex items-center cursor-pointer">
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
                   <Globe className="w-5 h-5 text-white" />
                 </div>
