@@ -1,6 +1,5 @@
 'use client';
-
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { 
   Globe, 
@@ -10,145 +9,259 @@ import {
   DollarSign, 
   ArrowRight,
   CheckCircle,
-  Star
+  Star,
+  Sparkles,
+  Zap,
+  Target
 } from 'lucide-react';
+import Navbar from '@/components/Navbar';
+import FeatureCard from '@/components/FeatureCard';
+import TestimonialCard from '@/components/TestimonialCard';
+import StatsCounter from '@/components/StatsCounter';
 
 export default function Home() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [heroVisible, setHeroVisible] = useState(false);
+  const [floatingElements, setFloatingElements] = useState([]);
+  const heroRef = useRef();
+
+  useEffect(() => {
+    setHeroVisible(true);
+    
+    const elements = Array.from({ length: 15 }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      delay: Math.random() * 5,
+      duration: 10 + Math.random() * 20,
+      size: 2 + Math.random() * 6
+    }));
+    setFloatingElements(elements);
+  }, []);
 
   const features = [
     {
-      icon: <Globe className="w-6 h-6" />,
-      title: "Quality Backlinks",
-      description: "Access thousands of high-quality backlinks from verified websites with strong domain authority."
+      icon: <Sparkles className="w-8 h-8" />,
+      title: "Premium Backlinks",
+      description: "Access thousands of high-authority backlinks from verified websites with exceptional domain ratings and organic traffic."
     },
     {
-      icon: <TrendingUp className="w-6 h-6" />,
-      title: "Boost Your SEO",
-      description: "Improve your search engine rankings and drive more organic traffic to your website."
+      icon: <TrendingUp className="w-8 h-8" />,
+      title: "SEO Acceleration",
+      description: "Dramatically improve your search engine rankings and drive exponential organic traffic growth to your website."
     },
     {
-      icon: <Shield className="w-6 h-6" />,
-      title: "Secure Transactions",
-      description: "Safe and secure payment processing with escrow protection for all transactions."
+      icon: <Shield className="w-8 h-8" />,
+      title: "Secure Platform",
+      description: "Enterprise-grade security with escrow protection, SSL encryption, and fraud prevention for all transactions."
     },
     {
-      icon: <Users className="w-6 h-6" />,
-      title: "Trusted Community",
-      description: "Join thousands of website owners and marketers in our growing community."
+      icon: <Zap className="w-8 h-8" />,
+      title: "Instant Results",
+      description: "Get your backlinks indexed quickly and see measurable improvements in your search rankings within weeks."
     }
   ];
 
   const stats = [
-    { number: "10,000+", label: "Active Backlinks" },
-    { number: "5,000+", label: "Website Owners" },
-    { number: "98%", label: "Satisfaction Rate" },
-    { number: "$2M+", label: "Total Transactions" }
+    { number: "50K+", label: "Active Backlinks" },
+    { number: "15K+", label: "Website Owners" },
+    { number: "99%", label: "Satisfaction Rate" },
+    { number: "10M", label: "Total Transactions" }
   ];
 
   const testimonials = [
     {
       name: "Sarah Johnson",
-      role: "Digital Marketing Manager",
-      content: "This platform has transformed our SEO strategy. We've seen a 300% increase in organic traffic in just 6 months.",
+      role: "Digital Marketing Director",
+      content: "This platform completely revolutionized our SEO strategy. We've achieved a 400% increase in organic traffic and our domain authority skyrocketed from 28 to 52 in just 4 months.",
       rating: 5
     },
     {
       name: "Mike Chen",
-      role: "E-commerce Owner",
-      content: "The quality of backlinks here is exceptional. Our domain authority jumped from 25 to 45 in 3 months.",
+      role: "E-commerce Founder",
+      content: "The quality of backlinks here is unmatched. Our website now ranks #1 for multiple high-competition keywords, resulting in 6-figure revenue growth.",
       rating: 5
     },
     {
       name: "Emily Rodriguez",
-      role: "Blog Owner",
-      content: "I've been selling backlinks on this platform for a year now. It's a great source of passive income.",
+      role: "Content Creator",
+      content: "I've been monetizing my blog through this platform for over 2 years. It's generated consistent passive income while maintaining my site's integrity.",
       rating: 5
     }
   ];
 
   return (
-    <div className="min-h-screen">
-      {/* Navigation */}
-      <nav className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Globe className="w-8 h-8 text-blue-600" />
-              <span className="ml-2 text-xl font-bold text-gray-900">BacklinkPro</span>
-            </div>
-            
-            <div className="hidden md:flex items-center space-x-8">
-              <a href="#features" className="text-gray-600 hover:text-gray-900">Features</a>
-              <a href="#pricing" className="text-gray-600 hover:text-gray-900">Pricing</a>
-              <a href="#about" className="text-gray-600 hover:text-gray-900">About</a>
-              <Link href="/login" className="btn-secondary">Login</Link>
-              <Link href="/register" className="btn-primary">Get Started</Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-black">
+      <Navbar />
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-600 to-purple-700 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            The Premier Backlink Marketplace
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto">
-            Connect with website owners worldwide. Buy and sell high-quality backlinks to boost your SEO and grow your online presence.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/register" className="btn-success text-lg px-8 py-3 inline-flex items-center">
-              Start Selling Backlinks
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Link>
-            <Link href="/register" className="btn-secondary text-lg px-8 py-3">
-              Browse Backlinks
-            </Link>
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {floatingElements.map((element) => (
+          <div
+            key={element.id}
+            className="absolute w-1 h-1 bg-emerald-500/30 rounded-full animate-pulse"
+            style={{
+              left: `${element.x}%`,
+              top: `${element.y}%`,
+              animationDelay: `${element.delay}s`,
+              animationDuration: `${element.duration}s`,
+              width: `${element.size}px`,
+              height: `${element.size}px`,
+            }}
+          ></div>
+        ))}
+        
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/30 via-black to-gray-900/60"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(16,185,129,0.15),transparent_60%)] animate-pulse"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(16,185,129,0.10),transparent_60%)]"></div>
+        
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20"></div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className={`transform transition-all duration-1500 ${heroVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'}`}>
+            <div className="mb-8 animate-bounce">
+              <span className="inline-block px-6 py-3 bg-emerald-500/20 border border-emerald-500/40 rounded-full text-emerald-400 text-sm font-medium backdrop-blur-sm shadow-lg hover:bg-emerald-500/30 transition-all duration-300 cursor-default">
+                ✨ #1 Premium Link Marketplace
+              </span>
+            </div>
+            <h1 className="text-5xl md:text-8xl font-bold mb-8 bg-gradient-to-r from-white via-gray-100 to-emerald-400 bg-clip-text text-transparent leading-tight animate-pulse">
+              Welcome to<br />
+              <span className="text-emerald-500 relative">
+                LinkVault
+                <div className="absolute -inset-2 bg-emerald-500/20 blur-xl rounded-full animate-pulse"></div>
+              </span>
+            </h1>
+            <p className="text-xl md:text-2xl mb-12 text-gray-300 max-w-4xl mx-auto leading-relaxed animate-fadeInUp">
+              The ultimate marketplace for premium backlinks. Connect with elite website owners, accelerate your SEO growth, and dominate search rankings with our exclusive link ecosystem.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Link href="/register" className="group relative bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-500 hover:from-emerald-600 hover:via-emerald-500 hover:to-emerald-600 text-white text-lg px-12 py-5 rounded-2xl font-semibold transition-all duration-500 transform hover:scale-110 hover:-translate-y-1 shadow-lg hover:shadow-emerald-500/40 inline-flex items-center overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                <span className="relative z-10">Start Selling Now</span>
+                <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-2 group-hover:scale-110 transition-all duration-300" />
+              </Link>
+              <Link href="/register" className="group relative bg-gray-800/80 hover:bg-gray-700/80 border-2 border-gray-700 hover:border-emerald-500/60 text-white text-lg px-12 py-5 rounded-2xl font-semibold transition-all duration-500 transform hover:scale-110 hover:-translate-y-1 backdrop-blur-sm overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-emerald-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <span className="relative z-10">Explore Links</span>
+              </Link>
+            </div>
           </div>
         </div>
+
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent"></div>
+        
+        <style jsx>{`
+          @keyframes fadeInUp {
+            from {
+              opacity: 0;
+              transform: translateY(30px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+          .animate-fadeInUp {
+            animation: fadeInUp 1s ease-out 0.5s both;
+          }
+        `}</style>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 bg-white">
+      <section className="py-20 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-blue-600 mb-2">
-                  {stat.number}
-                </div>
-                <div className="text-gray-600">{stat.label}</div>
-              </div>
+              <StatsCounter 
+                key={index}
+                number={stat.number}
+                label={stat.label}
+                delay={index * 150}
+              />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="py-20 bg-gray-50">
+      <section id="features" className="py-24 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Choose BacklinkPro?
+          <div className="text-center mb-20">
+            <div className="mb-6 animate-bounce">
+              <span className="inline-block px-6 py-3 bg-emerald-500/20 border border-emerald-500/40 rounded-full text-emerald-400 text-sm font-medium backdrop-blur-sm hover:bg-emerald-500/30 transition-all duration-300 cursor-default">
+                ✨ Why Choose LinkVault
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 bg-gradient-to-r from-white via-emerald-400 to-white bg-clip-text relative">
+              Premium Features
+              <div className="absolute -inset-4 bg-emerald-500/5 blur-3xl rounded-full animate-pulse"></div>
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              We provide everything you need to succeed in the competitive world of SEO and link building.
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+              Everything you need to dominate search rankings and build a thriving link empire.
             </p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
-              <div key={index} className="card text-center">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4 text-blue-600">
-                  {feature.icon}
+              <FeatureCard
+                key={index}
+                icon={feature.icon}
+                title={feature.title}
+                description={feature.description}
+                delay={index * 100}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="how-it-works" className="py-24 bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <div className="mb-4">
+              <span className="inline-block px-4 py-2 bg-emerald-500/20 border border-emerald-500/30 rounded-full text-emerald-400 text-sm font-medium backdrop-blur-sm">
+                Simple Process
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 bg-gradient-to-r from-white to-emerald-400 bg-clip-text">
+              How It Works
+            </h2>
+            <p className="text-xl text-gray-400 leading-relaxed">
+              Get started in minutes with our streamlined 3-step process
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-12">
+            {[
+              {
+                step: "1",
+                title: "Create Account",
+                description: "Sign up instantly and choose your role as a buyer or seller. Verify your websites and set up your premium profile.",
+                icon: "🚀"
+              },
+              {
+                step: "2", 
+                title: "Browse & Connect",
+                description: "Discover premium backlink opportunities or list your high-authority websites for instant monetization.",
+                icon: "🔍"
+              },
+              {
+                step: "3",
+                title: "Secure Transaction", 
+                description: "Complete purchases or receive payments safely through our military-grade encrypted platform with instant delivery.",
+                icon: "🛡️"
+              }
+            ].map((item, index) => (
+              <div key={index} className="text-center group cursor-pointer">
+                <div className="relative mb-8">
+                  <div className="w-24 h-24 bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-500 rounded-3xl flex flex-col items-center justify-center mx-auto text-white shadow-2xl group-hover:scale-125 group-hover:rotate-6 transition-all duration-500 border-2 border-emerald-400/30 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                    <div className="text-2xl mb-1 relative z-10">{item.icon}</div>
+                    <div className="text-lg font-bold relative z-10">{item.step}</div>
+                  </div>
+                  {index < 2 && (
+                    <div className="hidden md:block absolute top-12 left-full w-full h-0.5 bg-gradient-to-r from-emerald-500/60 via-emerald-400/40 to-transparent animate-pulse"></div>
+                  )}
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600">
-                  {feature.description}
+                <h3 className="text-2xl font-semibold text-white mb-4 group-hover:text-emerald-400 transition-all duration-300 group-hover:scale-105">{item.title}</h3>
+                <p className="text-gray-400 leading-relaxed text-lg group-hover:text-gray-300 transition-colors duration-300">
+                  {item.description}
                 </p>
               </div>
             ))}
@@ -156,151 +269,155 @@ export default function Home() {
         </div>
       </section>
 
-      {/* How It Works */}
-      <section className="py-20 bg-white">
+      <section id="testimonials" className="py-24 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              How It Works
+          <div className="text-center mb-20">
+            <div className="mb-4">
+              <span className="inline-block px-4 py-2 bg-emerald-500/20 border border-emerald-500/30 rounded-full text-emerald-400 text-sm font-medium backdrop-blur-sm">
+                Success Stories
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 bg-gradient-to-r from-white to-emerald-400 bg-clip-text">
+              Client Testimonials
             </h2>
-            <p className="text-xl text-gray-600">
-              Get started in minutes with our simple 3-step process
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">
-                1
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Sign Up</h3>
-              <p className="text-gray-600">
-                Create your account in seconds. Choose whether you want to buy or sell backlinks.
-              </p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">
-                2
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Browse or List</h3>
-              <p className="text-gray-600">
-                Browse available backlinks or list your own websites for backlink opportunities.
-              </p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">
-                3
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Complete Transaction</h3>
-              <p className="text-gray-600">
-                Purchase backlinks or receive payments securely through our platform.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              What Our Users Say
-            </h2>
-            <p className="text-xl text-gray-600">
-              Join thousands of satisfied customers who trust BacklinkPro
+            <p className="text-xl text-gray-400 leading-relaxed">
+              Join thousands of satisfied customers who&apos;ve transformed their SEO results
             </p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <div key={index} className="card">
-                <div className="flex items-center mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
-                  ))}
-                </div>
-                <p className="text-gray-600 mb-4">&ldquo;{testimonial.content}&rdquo;</p>
-                <div>
-                  <div className="font-semibold text-gray-900">{testimonial.name}</div>
-                  <div className="text-gray-500">{testimonial.role}</div>
-                </div>
-              </div>
+              <TestimonialCard
+                key={index}
+                name={testimonial.name}
+                role={testimonial.role}
+                content={testimonial.content}
+                rating={testimonial.rating}
+                delay={index * 150}
+              />
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-blue-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to Get Started?
+      <section className="py-24 bg-gradient-to-br from-emerald-900/20 via-black to-gray-900/40 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.15),transparent_70%)] animate-pulse"></div>
+        
+        {floatingElements.slice(0, 8).map((element) => (
+          <div
+            key={`cta-${element.id}`}
+            className="absolute w-1 h-1 bg-emerald-400/40 rounded-full animate-ping"
+            style={{
+              left: `${element.x}%`,
+              top: `${element.y}%`,
+              animationDelay: `${element.delay + 2}s`,
+              animationDuration: `${element.duration / 2}s`,
+            }}
+          ></div>
+        ))}
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="mb-8 animate-bounce">
+            <span className="inline-block px-6 py-3 bg-emerald-500/20 border border-emerald-500/40 rounded-full text-emerald-400 text-sm font-medium backdrop-blur-sm hover:bg-emerald-500/30 transition-all duration-300 cursor-default">
+              🚀 Ready to Dominate?
+            </span>
+          </div>
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-emerald-400 to-white bg-clip-text text-transparent relative">
+            Start Your SEO Revolution
+            <div className="absolute -inset-6 bg-emerald-500/10 blur-3xl rounded-full animate-pulse"></div>
           </h2>
-          <p className="text-xl mb-8 text-blue-100 max-w-2xl mx-auto">
-            Join thousands of website owners and marketers who are already using BacklinkPro to grow their online presence.
+          <p className="text-xl mb-12 text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Join thousands of website owners and marketers who are already using LinkVault to accelerate their online growth and revenue exponentially.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/register" className="btn-success text-lg px-8 py-3 inline-flex items-center">
-              Create Free Account
-              <ArrowRight className="ml-2 w-5 h-5" />
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <Link href="/register" className="group relative bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-500 hover:from-emerald-600 hover:via-emerald-500 hover:to-emerald-600 text-white text-lg px-12 py-5 rounded-2xl font-semibold transition-all duration-500 transform hover:scale-110 hover:-translate-y-2 shadow-xl hover:shadow-emerald-500/50 inline-flex items-center overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+              <span className="relative z-10">Create Free Account</span>
+              <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-3 group-hover:scale-125 transition-all duration-300" />
             </Link>
-            <Link href="#features" className="btn-secondary text-lg px-8 py-3">
-              Learn More
+            <Link href="#features" className="group relative bg-gray-800/80 hover:bg-gray-700/80 border-2 border-gray-700 hover:border-emerald-500/60 text-white text-lg px-12 py-5 rounded-2xl font-semibold transition-all duration-500 transform hover:scale-110 hover:-translate-y-2 backdrop-blur-sm overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <span className="relative z-10">Learn More</span>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
+      <footer className="bg-gray-950 text-white py-16 border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center mb-4">
-                <Globe className="w-8 h-8 text-blue-400" />
-                <span className="ml-2 text-xl font-bold">BacklinkPro</span>
+          <div className="grid md:grid-cols-4 gap-12">
+            <div className="md:col-span-1">
+              <div className="flex items-center mb-6 group cursor-pointer">
+                <div className="relative">
+                  <Globe className="w-8 h-8 text-emerald-500 group-hover:rotate-12 transition-transform duration-500" />
+                  <div className="absolute -inset-2 bg-emerald-500/20 rounded-full opacity-0 group-hover:opacity-100 animate-pulse transition-opacity duration-300"></div>
+                </div>
+                <span className="ml-2 text-xl font-bold bg-gradient-to-r from-white to-emerald-400 bg-clip-text text-transparent">
+                  LinkVault
+                </span>
               </div>
-              <p className="text-gray-400">
-                The premier marketplace for buying and selling high-quality backlinks.
+              <p className="text-gray-400 leading-relaxed mb-6">
+                The premier marketplace for buying and selling premium backlinks. Accelerate your SEO growth and dominate your competition today.
               </p>
+              <div className="flex space-x-4">
+                {['T', 'L', 'F', 'I'].map((letter, index) => (
+                  <div key={letter} className="w-10 h-10 bg-gray-800 hover:bg-emerald-500 rounded-lg flex items-center justify-center transition-all duration-300 cursor-pointer hover:scale-110 hover:rotate-3 border border-gray-700 hover:border-emerald-400 group">
+                    <span className="text-sm font-bold group-hover:text-white transition-colors">{letter}</span>
+                  </div>
+                ))}
+              </div>
             </div>
             
             <div>
-              <h3 className="text-lg font-semibold mb-4">Platform</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">Browse Backlinks</a></li>
-                <li><a href="#" className="hover:text-white">Sell Backlinks</a></li>
-                <li><a href="#" className="hover:text-white">Pricing</a></li>
-                <li><a href="#" className="hover:text-white">API</a></li>
+              <h3 className="text-lg font-semibold mb-6 text-white relative group cursor-pointer">
+                Platform
+                <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-emerald-500 group-hover:w-full transition-all duration-300"></div>
+              </h3>
+              <ul className="space-y-3 text-gray-400">
+                <li><a href="#" className="hover:text-emerald-400 transition-all duration-300 hover:translate-x-2 inline-block">Browse Backlinks</a></li>
+                <li><a href="#" className="hover:text-emerald-400 transition-all duration-300 hover:translate-x-2 inline-block">Sell Backlinks</a></li>
+                <li><a href="#" className="hover:text-emerald-400 transition-all duration-300 hover:translate-x-2 inline-block">Pricing Plans</a></li>
+                <li><a href="#" className="hover:text-emerald-400 transition-all duration-300 hover:translate-x-2 inline-block">API Access</a></li>
+                <li><a href="#" className="hover:text-emerald-400 transition-all duration-300 hover:translate-x-2 inline-block">Affiliate Program</a></li>
               </ul>
             </div>
             
             <div>
-              <h3 className="text-lg font-semibold mb-4">Support</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">Help Center</a></li>
-                <li><a href="#" className="hover:text-white">Contact Us</a></li>
-                <li><a href="#" className="hover:text-white">Terms of Service</a></li>
-                <li><a href="#" className="hover:text-white">Privacy Policy</a></li>
+              <h3 className="text-lg font-semibold mb-6 text-white relative group cursor-pointer">
+                Support
+                <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-emerald-500 group-hover:w-full transition-all duration-300"></div>
+              </h3>
+              <ul className="space-y-3 text-gray-400">
+                <li><a href="#" className="hover:text-emerald-400 transition-all duration-300 hover:translate-x-2 inline-block">Help Center</a></li>
+                <li><a href="#" className="hover:text-emerald-400 transition-all duration-300 hover:translate-x-2 inline-block">Live Chat</a></li>
+                <li><a href="#" className="hover:text-emerald-400 transition-all duration-300 hover:translate-x-2 inline-block">Contact Us</a></li>
+                <li><a href="#" className="hover:text-emerald-400 transition-all duration-300 hover:translate-x-2 inline-block">Terms of Service</a></li>
+                <li><a href="#" className="hover:text-emerald-400 transition-all duration-300 hover:translate-x-2 inline-block">Privacy Policy</a></li>
               </ul>
             </div>
             
             <div>
-              <h3 className="text-lg font-semibold mb-4">Connect</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">Blog</a></li>
-                <li><a href="#" className="hover:text-white">Twitter</a></li>
-                <li><a href="#" className="hover:text-white">LinkedIn</a></li>
-                <li><a href="#" className="hover:text-white">Email</a></li>
+              <h3 className="text-lg font-semibold mb-6 text-white relative group cursor-pointer">
+                Resources
+                <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-emerald-500 group-hover:w-full transition-all duration-300"></div>
+              </h3>
+              <ul className="space-y-3 text-gray-400">
+                <li><a href="#" className="hover:text-emerald-400 transition-all duration-300 hover:translate-x-2 inline-block">SEO Blog</a></li>
+                <li><a href="#" className="hover:text-emerald-400 transition-all duration-300 hover:translate-x-2 inline-block">Link Building Guide</a></li>
+                <li><a href="#" className="hover:text-emerald-400 transition-all duration-300 hover:translate-x-2 inline-block">Case Studies</a></li>
+                <li><a href="#" className="hover:text-emerald-400 transition-all duration-300 hover:translate-x-2 inline-block">Webinars</a></li>
+                <li><a href="#" className="hover:text-emerald-400 transition-all duration-300 hover:translate-x-2 inline-block">Community</a></li>
               </ul>
             </div>
           </div>
           
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 BacklinkPro. All rights reserved.</p>
+          <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <p className="text-gray-400 text-sm">© 2024 LinkVault. All rights reserved. Built with ❤️ for SEO professionals.</p>
+            <div className="flex items-center space-x-6 mt-4 md:mt-0 text-sm text-gray-400">
+              <a href="#" className="hover:text-emerald-400 transition-all duration-300 hover:scale-105">Cookie Policy</a>
+              <a href="#" className="hover:text-emerald-400 transition-all duration-300 hover:scale-105">GDPR</a>
+              <a href="#" className="hover:text-emerald-400 transition-all duration-300 hover:scale-105">Security</a>
+            </div>
           </div>
         </div>
       </footer>
